@@ -143,19 +143,15 @@ function isDirectHost(host) {
 
 function FindProxyForURL(url, host) {
   var h = host.toLowerCase();
-
-  // Path-specific endpoints documented for live chat widget bootstrap assets.
-  if (shExpMatch(url, "https://oc-cdn-ocprod.azureedge.net/livechatwidget*")) {
-    return "DIRECT";
-  }
-  if (shExpMatch(url, "https://cdn.botframework.com/botframework-webchat*")) {
-    return "DIRECT";
-  }
+  var u = url.toLowerCase();
 
   if (isDirectHost(h)) {
-    return "DIRECT";
+    if (shExpMatch(u, "https://*")) {
+      return HTTPS_PROXY_ROUTE;
+    }
+    return HTTP_PROXY_ROUTE;
   }
 
-  // Non-listed hosts should also bypass proxy.
+  // Non-listed hosts bypass proxy.
   return "DIRECT";
 }
