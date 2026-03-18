@@ -10,10 +10,10 @@
   7) https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#required-services
 */
 
-var HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080; DIRECT";
-var HTTPS_PROXY_ROUTE = "HTTPS 10.194.0.4:9443; PROXY 10.194.0.4:9080; DIRECT";
+var HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080";
+var HTTPS_PROXY_ROUTE = "PROXY 10.194.0.4:9443";
 
-var DIRECT_HOST_PATTERNS = [
+var PROXY_HOST_PATTERNS = [
   // Dynamics 365 Contact Center / Omnichannel
   "*.omnichannelengagementhub.com",
   "ccaas-embed-prod.azureedge.net",
@@ -124,32 +124,17 @@ var DIRECT_HOST_PATTERNS = [
   "cci-prod-botdesigner.azureedge.net"
 ];
 
-function hostMatchesPattern(host, pattern) {
-  if (pattern.indexOf("*") !== -1) {
-    return shExpMatch(host, pattern);
-  }
-  return host === pattern;
-}
-
-function isDirectHost(host) {
-  var i;
-  for (i = 0; i < DIRECT_HOST_PATTERNS.length; i++) {
-    if (hostMatchesPattern(host, DIRECT_HOST_PATTERNS[i])) {
-      return true;
-    }
-  }
-  return false;
-}
-
 function FindProxyForURL(url, host) {
   var h = host.toLowerCase();
-  var u = url.toLowerCase();
+  var i;
 
-  if (isDirectHost(h)) {
-    if (shExpMatch(u, "https://*")) {
-      return HTTPS_PROXY_ROUTE;
+  for (i = 0; i < PROXY_HOST_PATTERNS.length; i++) {
+    if (shExpMatch(h, PROXY_HOST_PATTERNS[i])) {
+      if (url.substring(0, 6).toLowerCase() === "https:") {
+        return HTTPS_PROXY_ROUTE;
+      }
+      return HTTP_PROXY_ROUTE;
     }
-    return HTTP_PROXY_ROUTE;
   }
 
   // Non-listed hosts bypass proxy.

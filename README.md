@@ -8,11 +8,12 @@
 ## Main File
 
 - `power.pac`: PAC file used by clients/browsers.
-  - Routes endpoints listed in `DIRECT_HOST_PATTERNS` through proxy.
-  - Returns `DIRECT` for non-listed endpoints.
-  - Proxy routes:
-    - HTTP: `PROXY 10.194.0.4:9080; DIRECT`
-    - HTTPS: `HTTPS 10.194.0.4:9443; PROXY 10.194.0.4:9080; DIRECT`
+  - Flat PAC logic (single `FindProxyForURL` with inline loop, no helper functions).
+  - Hosts listed in `PROXY_HOST_PATTERNS` are routed via proxy.
+  - Non-listed hosts use `DIRECT`.
+  - Route variables used by the PAC:
+    - `HTTP_PROXY_ROUTE = PROXY 10.194.0.4:9080`
+    - `HTTPS_PROXY_ROUTE = PROXY 10.194.0.4:9443`
 
 ## Supporting Files
 

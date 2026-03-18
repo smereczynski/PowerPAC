@@ -37,3 +37,11 @@ Date: 2026-03-18
 ## Output
 
 - PAC file: `power.pac`
+
+## Current PAC behavior
+
+- Hosts matching `PROXY_HOST_PATTERNS` are sent to proxy routes.
+- Non-listed hosts return `DIRECT`.
+- PAC is intentionally flat/simple:
+  - no helper functions for host checks
+  - single `FindProxyForURL` loop with `shExpMatch`
