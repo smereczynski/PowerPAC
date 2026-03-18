@@ -10,8 +10,8 @@
   7) https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#required-services
 */
 
-var HTTP_PROXY_ROUTE = "PROXY 10.0.0.4:9080; DIRECT";
-var HTTPS_PROXY_ROUTE = "HTTPS 10.0.0.4:9443; PROXY 10.0.0.4:9080; DIRECT";
+var HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080; DIRECT";
+var HTTPS_PROXY_ROUTE = "HTTPS 10.194.0.4:9443; PROXY 10.194.0.4:9080; DIRECT";
 
 var DIRECT_HOST_PATTERNS = [
   // Dynamics 365 Contact Center / Omnichannel
@@ -143,7 +143,6 @@ function isDirectHost(host) {
 
 function FindProxyForURL(url, host) {
   var h = host.toLowerCase();
-  var u = url.toLowerCase();
 
   // Path-specific endpoints documented for live chat widget bootstrap assets.
   if (shExpMatch(url, "https://oc-cdn-ocprod.azureedge.net/livechatwidget*")) {
@@ -157,9 +156,6 @@ function FindProxyForURL(url, host) {
     return "DIRECT";
   }
 
-  if (shExpMatch(u, "https://*")) {
-    return HTTPS_PROXY_ROUTE;
-  }
-
-  return HTTP_PROXY_ROUTE;
+  // Non-listed hosts should also bypass proxy.
+  return "DIRECT";
 }

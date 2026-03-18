@@ -9,9 +9,10 @@
 
 - `power.pac`: PAC file used by clients/browsers.
   - Returns `DIRECT` for required Microsoft endpoints used by the supported scenario.
-  - Routes other traffic through:
-    - HTTP: `PROXY 10.0.0.4:9080; DIRECT`
-    - HTTPS: `HTTPS 10.0.0.4:9443; PROXY 10.0.0.4:9080; DIRECT`
+  - Returns `DIRECT` for non-listed endpoints as well (proxy currently bypassed globally).
+  - Proxy routes are still defined in file for easy future re-enable:
+    - HTTP: `PROXY 10.194.0.4:9080; DIRECT`
+    - HTTPS: `HTTPS 10.194.0.4:9443; PROXY 10.194.0.4:9080; DIRECT`
 
 ## Supporting Files
 
