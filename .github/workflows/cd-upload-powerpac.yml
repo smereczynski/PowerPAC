@@ -1,0 +1,54 @@
+name: CD - Upload power.pac to Blob
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - power.pac
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upload-power-pac-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  upload-power-pac:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required configuration
+        shell: bash
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_CONTAINER: ${{ vars.AZURE_STORAGE_CONTAINER }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
+        run: |
+          set -euo pipefail
+          : "${AZURE_STORAGE_ACCOUNT:?Set repository variable AZURE_STORAGE_ACCOUNT}"
+          : "${AZURE_STORAGE_CONTAINER:?Set repository variable AZURE_STORAGE_CONTAINER}"
+          : "${AZURE_STORAGE_KEY:?Set repository secret AZURE_STORAGE_KEY}"
+
+      - name: Upload power.pac (overwrite)
+        shell: bash
+        env:
+          AZURE_STORAGE_ACCOUNT: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+          AZURE_STORAGE_CONTAINER: ${{ vars.AZURE_STORAGE_CONTAINER }}
+          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
+        run: |
+          set -euo pipefail
+
+          az storage blob upload \
+            --account-name "$AZURE_STORAGE_ACCOUNT" \
+            --container-name "$AZURE_STORAGE_CONTAINER" \
+            --name "power.pac" \
+            --file "power.pac" \
+            --account-key "$AZURE_STORAGE_KEY" \
+            --overwrite true \
+            --only-show-errors
