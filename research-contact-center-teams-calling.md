@@ -5,19 +5,19 @@ Date: 2026-03-18
 ## Sources
 
 1. Dynamics 365 Contact Center system requirements  
-   https://learn.microsoft.com/en-us/dynamics365/contact-center/implement/system-requirements-contact-center
+   <https://learn.microsoft.com/en-us/dynamics365/contact-center/implement/system-requirements-contact-center>
 2. Microsoft 365 endpoint web service (worldwide)  
-   https://endpoints.office.com/endpoints/worldwide?clientrequestid=\<GUID\>
+   <https://endpoints.office.com/endpoints/worldwide?clientrequestid=\><GUID\>
 3. Power Platform URLs and IP address ranges  
-   https://learn.microsoft.com/en-us/power-platform/admin/online-requirements
+   <https://learn.microsoft.com/en-us/power-platform/admin/online-requirements>
 4. Power Apps required services  
-   https://learn.microsoft.com/en-us/power-apps/limits-and-config#required-services
+   <https://learn.microsoft.com/en-us/power-apps/limits-and-config#required-services>
 5. Power Automate required services  
-   https://learn.microsoft.com/en-us/power-automate/ip-address-configuration#required-services
+   <https://learn.microsoft.com/en-us/power-automate/ip-address-configuration#required-services>
 6. Power Pages required services  
-   https://learn.microsoft.com/en-us/power-pages/system-requirements#required-services
+   <https://learn.microsoft.com/en-us/power-pages/system-requirements#required-services>
 7. Copilot Studio required services  
-   https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#required-services
+   <https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#required-services>
 
 ## URL groups included in PAC
 
