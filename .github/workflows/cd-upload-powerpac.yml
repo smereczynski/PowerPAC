@@ -44,10 +44,68 @@ jobs:
         run: |
           set -euo pipefail
 
+          BLOB_NAME="power.pac"
+
+          # Check whether the target blob exists and inspect lease state if it does.
+          if az storage blob exists \
+            --account-name "$AZURE_STORAGE_ACCOUNT" \
+            --container-name "$AZURE_STORAGE_CONTAINER" \
+            --name "$BLOB_NAME" \
+            --account-key "$AZURE_STORAGE_KEY" \
+            --query "exists" \
+            -o tsv | grep -qi '^true$'; then
+
+            LEASE_STATUS="$(az storage blob show \
+              --account-name "$AZURE_STORAGE_ACCOUNT" \
+              --container-name "$AZURE_STORAGE_CONTAINER" \
+              --name "$BLOB_NAME" \
+              --account-key "$AZURE_STORAGE_KEY" \
+              --query "properties.lease.status" \
+              -o tsv)"
+
+            LEASE_STATE="$(az storage blob show \
+              --account-name "$AZURE_STORAGE_ACCOUNT" \
+              --container-name "$AZURE_STORAGE_CONTAINER" \
+              --name "$BLOB_NAME" \
+              --account-key "$AZURE_STORAGE_KEY" \
+              --query "properties.lease.state" \
+              -o tsv)"
+
+            echo "Blob lease status: ${LEASE_STATUS:-unknown}, state: ${LEASE_STATE:-unknown}"
+
+            # If blob is leased/locked, break lease so overwrite can succeed without lease ID secret.
+            if [[ "${LEASE_STATUS,,}" == "locked" || "${LEASE_STATE,,}" == "leased" ]]; then
+              echo "Blob is leased. Breaking lease..."
+              az storage blob lease break \
+                --account-name "$AZURE_STORAGE_ACCOUNT" \
+                --container-name "$AZURE_STORAGE_CONTAINER" \
+                --blob-name "$BLOB_NAME" \
+                --account-key "$AZURE_STORAGE_KEY" \
+                --lease-break-period 0 \
+                --only-show-errors >/dev/null
+
+              # Wait until the lease is no longer active.
+              for _ in {1..20}; do
+                CUR_STATE="$(az storage blob show \
+                  --account-name "$AZURE_STORAGE_ACCOUNT" \
+                  --container-name "$AZURE_STORAGE_CONTAINER" \
+                  --name "$BLOB_NAME" \
+                  --account-key "$AZURE_STORAGE_KEY" \
+                  --query "properties.lease.state" \
+                  -o tsv)"
+                if [[ "${CUR_STATE,,}" == "broken" || "${CUR_STATE,,}" == "available" ]]; then
+                  echo "Lease state is now: $CUR_STATE"
+                  break
+                fi
+                sleep 2
+              done
+            fi
+          fi
+
           az storage blob upload \
             --account-name "$AZURE_STORAGE_ACCOUNT" \
             --container-name "$AZURE_STORAGE_CONTAINER" \
-            --name "power.pac" \
+            --name "$BLOB_NAME" \
             --file "power.pac" \
             --account-key "$AZURE_STORAGE_KEY" \
             --overwrite true \
