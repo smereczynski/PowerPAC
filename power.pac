@@ -56,6 +56,7 @@ var PROXY_HOST_PATTERNS = [
   "*.asm.skype.com",
   "*.keydelivery.mediaservices.windows.net",
   "*.streaming.mediaservices.windows.net",
+  "*.communication.microsoft.com",
 
   // Dynamics 365 / Power Platform core (Power Platform URLs and IP address ranges)
   "*.cloud.microsoft",
@@ -174,9 +175,6 @@ var PROXY_HOST_PATTERNS = [
 
   // Office measurement/telemetry upload endpoint
   "*.measure.office.com",
-
-  // Real-time communication signaling/registration (Teams + ACS interop)
-  "*.communication.microsoft.com",
 
   // SharePoint Online static/content delivery endpoint
   "*.sharepointonline.com",
