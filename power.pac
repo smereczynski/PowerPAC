@@ -121,7 +121,74 @@ var PROXY_HOST_PATTERNS = [
   "*.powerva.microsoft.com",
   "bot-framework.azureedge.net",
   "pa-guided.azureedge.net",
-  "cci-prod-botdesigner.azureedge.net"
+  "cci-prod-botdesigner.azureedge.net",
+
+  // Azure Rights Management / Information Protection endpoint
+  "*.aadrm.com",
+
+  // Certificate revocation/OCSP endpoint
+  "oneocsp.microsoft.com",
+
+  // Device management check-in endpoint
+  "*.dm.microsoft.com",
+
+  // Exchange Online Autodiscover endpoint
+  "*.outlook.com",
+
+  // Exchange Online endpoint
+  "*.office365.com",
+  "outlook.office.com",
+
+  // Microsoft 365 substrate/workload orchestration endpoint
+  "substrate.office.com",
+
+  // Microsoft 365 web shell/navigation endpoint
+  "*.suite.office.com",
+
+  // Microsoft Edge performance/telemetry endpoint
+  "*.msedge.net",
+
+  // Microsoft Edge web service endpoint
+  "edge.microsoft.com",
+
+  // Microsoft Fluid Relay collaboration backend endpoint
+  "*.fluidrelay.azure.com",
+
+  // Microsoft Forms endpoint
+  "forms.office.com",
+
+  // Microsoft Intune / Endpoint Manager management endpoint
+  "*.manage.microsoft.com",
+
+  // Microsoft Office service metadata/titles endpoint
+  "*.mos.microsoft.com",
+
+  // Office 365 resource/static content endpoint
+  "*.res.office365.com",
+
+  // Office CDN static/content endpoint
+  "*.cdn.office.net",
+
+  // Office client/cloud policy configuration endpoint
+  "clients.config.office.net",
+
+  // Office measurement/telemetry upload endpoint
+  "*.measure.office.com",
+
+  // Real-time communication signaling/registration (Teams + ACS interop)
+  "*.communication.microsoft.com",
+
+  // SharePoint Online static/content delivery endpoint
+  "*.sharepointonline.com",
+
+  // SharePoint Online tenant/API endpoint
+  "*.sharepoint.com",
+
+  // Windows Delivery Optimization content endpoints
+  "*.prod.do.dsp.mp.microsoft.com",
+
+  // Windows Push Notification Services endpoint
+  "*.wns.windows.com"
 ];
 
 function FindProxyForURL(url, host) {
