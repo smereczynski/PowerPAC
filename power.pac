@@ -8,6 +8,7 @@
   5) https://learn.microsoft.com/en-us/power-automate/ip-address-configuration#required-services
   6) https://learn.microsoft.com/en-us/power-pages/system-requirements#required-services
   7) https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#required-services
+  8) https://learn.microsoft.com/en-us/fabric/security/power-bi-allow-list-urls
 */
 
 var HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080";
@@ -57,6 +58,7 @@ var PROXY_HOST_PATTERNS = [
   "*.keydelivery.mediaservices.windows.net",
   "*.streaming.mediaservices.windows.net",
   "*.communication.microsoft.com",
+  "*.teams.cdn.office.net",
 
   // Dynamics 365 / Power Platform core (Power Platform URLs and IP address ranges)
   "*.cloud.microsoft",
@@ -89,6 +91,12 @@ var PROXY_HOST_PATTERNS = [
   "*.api.powerplatformusercontent.com",
   "*.powerplatformusercontent.com",
   "api.admin.powerplatform.microsoft.com",
+
+  // Power BI reports embedded in Dynamics 365 (Power BI allowlist: required endpoints)
+  "api.powerbi.com",
+  "*.powerbi.com",
+  "*.analysis.windows.net",
+  "*.pbidedicated.windows.net",
 
   // Power Apps required services
   "api.bap.microsoft.com",
