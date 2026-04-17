@@ -28,16 +28,14 @@ var PROXY_HOST_PATTERNS = [
   "login.microsoft.net",
   "login.microsoftonline.com",
   "login.windows.net",
+  "aadcdn.msauth.net",
+  "amcdn.msftauth.net",
+  "myapplications.microsoft.com",
   "browser.pipe.aria.microsoft.com",
 
   // Teams core (Contact Center doc + M365 Skype service area)
   "*.teams.microsoft.com",
   "teams.microsoft.com",
-  "plat.teams.microsoft.com",
-  "authsvc.teams.microsoft.com",
-  "*.ng.msg.teams.microsoft.com",
-  "*.notifications.teams.microsoft.com",
-  "*.trouter.teams.microsoft.com",
   "ecs.office.com",
   "*.teams.cloud.microsoft",
   "teams.cloud.microsoft",
@@ -48,13 +46,6 @@ var PROXY_HOST_PATTERNS = [
 
   // Teams / Skype signaling and voice dependencies
   "*.skype.com",
-  "*.trouter.skype.com",
-  "*.edge.skype.com",
-  "aad.skypetoken.skype.com",
-  "config.edge.skype.com",
-  "edge.skype.com",
-  "api.aps.skype.com",
-  "*.asm.skype.com",
   "*.keydelivery.mediaservices.windows.net",
   "*.streaming.mediaservices.windows.net",
   "*.communication.microsoft.com",
@@ -65,7 +56,6 @@ var PROXY_HOST_PATTERNS = [
   "*.static.microsoft",
   "*.usercontent.microsoft",
   "*.microsoftcloud.com",
-  "*.ces.microsoftcloud.com",
   "config.centro.core.microsoft",
   "admin.microsoft.com",
   "petrol.office.microsoft.com",
@@ -74,7 +64,6 @@ var PROXY_HOST_PATTERNS = [
   "login.microsoftonline-p.com",
   "login.live.com",
   "auth.gfx.ms",
-  "*.windows.net",
   "*.passport.net",
   "*.crm*.dynamics.com",
   "*.azureedge.net",
@@ -108,11 +97,10 @@ var PROXY_HOST_PATTERNS = [
   "*.flow.microsoft.com",
   "*.powerautomate.com",
   "*.events.data.microsoft.com",
-  "augloop.svc.cloud.microsoft",
-  "*.augloop.svc.cloud.microsoft",
   "*.ocv.microsoft.com",
   "ris.api.iris.microsoft.com",
   "eudb.ris.api.iris.microsoft.com",
+  "fd.api.iris.microsoft.com",
 
   // Power Automate / Power Pages / Copilot Studio required services
   "graph.microsoft.com",
@@ -131,6 +119,8 @@ var PROXY_HOST_PATTERNS = [
   "bot-framework.azureedge.net",
   "pa-guided.azureedge.net",
   "cci-prod-botdesigner.azureedge.net",
+  "directline.botframework.com",
+  "europe.token.botframework.com",
 
   // Azure Rights Management / Information Protection endpoint
   "*.aadrm.com",
@@ -166,6 +156,9 @@ var PROXY_HOST_PATTERNS = [
   // Microsoft Forms endpoint
   "forms.office.com",
 
+  // Microsoft Learn / documentation portal
+  "learn.microsoft.com",
+
   // Microsoft Intune / Endpoint Manager management endpoint
   "*.manage.microsoft.com",
 
@@ -180,9 +173,24 @@ var PROXY_HOST_PATTERNS = [
 
   // Office client/cloud policy configuration endpoint
   "clients.config.office.net",
+  "*.resources.office.net",
+  "content.lifecycle.office.net",
+  "support.content.office.net",
 
   // Office measurement/telemetry upload endpoint
   "*.measure.office.com",
+  "exo.nel.measure.office.net",
+
+  // Microsoft 365 productivity and diagnostics services
+  "augloop.office.com",
+  "*.augloop.office.com",
+  "ipv4probe.office.com",
+  "messaging.engagement.office.com",
+  "loki.delve.office.com",
+  "*.loki.delve.office.com",
+  "incidents.diagnostics-eudb.office.com",
+  "tr-ssc-mira.office.com",
+  "odc.officeapps.live.com",
 
   // SharePoint Online static/content delivery endpoint
   "*.sharepointonline.com",
@@ -192,9 +200,20 @@ var PROXY_HOST_PATTERNS = [
 
   // Windows Delivery Optimization content endpoints
   "*.prod.do.dsp.mp.microsoft.com",
+  "*.delivery.mp.microsoft.com",
 
   // Windows Push Notification Services endpoint
-  "*.wns.windows.com"
+  "*.wns.windows.com",
+
+  // Azure developer and observability services
+  "dev.azure.com",
+  "dc.services.visualstudio.com",
+  "js.monitor.azure.com",
+  "*.in.applicationinsights.azure.com",
+  "*.azurewebsites.net",
+
+  // Microsoft web, telemetry, and consumer services
+  "*.clarity.ms"
 ];
 
 function FindProxyForURL(url, host) {
