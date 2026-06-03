@@ -217,12 +217,28 @@ var PROXY_HOST_PATTERNS = [
 ];
 
 function FindProxyForURL(url, host) {
-  var h = host.toLowerCase();
+  var h = (host || "").toLowerCase();
+  var u = (url || "").toLowerCase();
   var i;
+  var hostPortSeparator;
+  var isHttpsLike;
+
+  // Some clients call PAC with host including :port (for example CONNECT host:443).
+  // Strip the port before wildcard matching against FQDN patterns.
+  hostPortSeparator = h.indexOf(":");
+  if (hostPortSeparator !== -1) {
+    h = h.substring(0, hostPortSeparator);
+  }
+
+  // Route true HTTPS and CONNECT-style :443 requests to the HTTPS explicit proxy.
+  isHttpsLike =
+    u.indexOf("https://") === 0 ||
+    u.indexOf("wss://") === 0 ||
+    (u.indexOf("://") === -1 && u.indexOf(":443") !== -1);
 
   for (i = 0; i < PROXY_HOST_PATTERNS.length; i++) {
     if (shExpMatch(h, PROXY_HOST_PATTERNS[i])) {
-      if (url.substring(0, 6).toLowerCase() === "https:") {
+      if (isHttpsLike) {
         return HTTPS_PROXY_ROUTE;
       }
       return HTTP_PROXY_ROUTE;
