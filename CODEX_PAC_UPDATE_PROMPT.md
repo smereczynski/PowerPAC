@@ -20,7 +20,7 @@ The PAC must keep current behavior:
 ### Proxy Requirements
 
 - `HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080"`
-- `HTTPS_PROXY_ROUTE = "PROXY 10.194.0.4:9443"`
+- `HTTPS_PROXY_ROUTE = "PROXY 10.194.0.4:9080"`
 
 Do not change these values unless explicitly requested.
 
