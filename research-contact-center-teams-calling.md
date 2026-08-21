@@ -41,7 +41,25 @@ Date: 2026-03-18
 ## Current PAC behavior
 
 - Hosts matching `PROXY_HOST_PATTERNS` are sent to proxy routes.
+- HTTP, HTTPS, WSS, and CONNECT-style `:443` traffic use the Azure Firewall
+  Explicit Proxy listener at `10.194.0.4:9080`.
 - Non-listed hosts return `DIRECT`.
 - PAC is intentionally flat/simple:
   - no helper functions for host checks
   - single `FindProxyForURL` loop with `shExpMatch`
+
+## Proxy port correction
+
+The PAC previously routed HTTPS-like traffic to `10.194.0.4:9443`. Packet
+captures showed immediate TCP resets from that address and port. A direct
+manual proxy comparison confirmed that `10.194.0.4:9080` works for both HTTP
+and HTTPS, while `9443` fails.
+
+Azure Firewall Explicit Proxy uses one configured HTTP port for both HTTP and
+HTTPS:
+<https://learn.microsoft.com/en-us/azure/firewall/explicit-proxy>
+
+The PAC therefore uses port `9080` for both route variables. This is the
+confirmed cause of the Microsoft HTTPS/WSS failures. The available evidence
+does not prove that a Windows update caused the issue to appear around
+August 17, 2026.

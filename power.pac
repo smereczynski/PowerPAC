@@ -12,7 +12,7 @@
 */
 
 var HTTP_PROXY_ROUTE = "PROXY 10.194.0.4:9080";
-var HTTPS_PROXY_ROUTE = "PROXY 10.194.0.4:9443";
+var HTTPS_PROXY_ROUTE = "PROXY 10.194.0.4:9080";
 
 var PROXY_HOST_PATTERNS = [
   // Dynamics 365 Contact Center / Omnichannel
@@ -230,7 +230,7 @@ function FindProxyForURL(url, host) {
     h = h.substring(0, hostPortSeparator);
   }
 
-  // Route true HTTPS and CONNECT-style :443 requests to the HTTPS explicit proxy.
+  // Route true HTTPS and CONNECT-style :443 requests to the shared proxy listener.
   isHttpsLike =
     u.indexOf("https://") === 0 ||
     u.indexOf("wss://") === 0 ||
